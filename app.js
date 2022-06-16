@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var apiRouter = require('./routes/api');
+const apiRouter = require('./routes/api');
 
 // Carga variables de entorno desde el archivo .env
 require('dotenv').config();

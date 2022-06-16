@@ -1,17 +1,20 @@
 const router = require('express').Router();
+const expenseModel = require('../../models/expense.model');
 
 router.get('/', (req, res) => {
-  res.end('Estoy en /expenses');
+  res.send('Estoy en /expenses');
 });
 
 router.post('/create', (req, res) => {
-  res.end('Estoy en /expenses/create');
+  res.send('Estoy en /expenses/create');
 });
 
 router.put('/edit', (req, res) => {
-  res.end('Estoy en /expenses/edit');
+  res.send('Estoy en /expenses/edit');
 });
 
 router.delete('/delete', (req, res) => {
-  res.end('Estoy en /expenses/delete');
+  res.send('Estoy en /expenses/delete');
 });
+
+module.exports = router;

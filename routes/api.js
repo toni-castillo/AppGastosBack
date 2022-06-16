@@ -8,7 +8,7 @@ const expensesApiRouter = require('./api/expenses');
 
 
 // router.use('/api/users', usersApiRouter);
-router.use('/api/expenses', expensesApiRouter);
+router.use('/expenses', expensesApiRouter);
 // router.use('/api/purchases', purchasesApiRouter);
 // router.use('/api/trainings', trainingsApiRouter);
 // router.use('/api/trips', tripsApiRouter);
