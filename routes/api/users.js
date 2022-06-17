@@ -2,9 +2,9 @@ const router = require('express').Router();
 const userModel = require('../../models/user.model');
 const { createToken } = require('../../helpers');
 
-// router.get('/', async (req, res) => {
-//   res.send('Hello World');
-// });
+router.get('/', async (req, res) => {
+  res.send('Hello World');
+});
 
 router.post('/login', async (req, res) => {
   const user = await userModel.getByEmail(req.body.email);

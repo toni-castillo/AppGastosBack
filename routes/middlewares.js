@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const dayjs = require('dayjs');
 
-const userModel = require('../../models/user.model');
+const userModel = require('../models/user.model');
 
 const checkToken = async (req, res, next) => {
   if (!req.headers.authorization) {

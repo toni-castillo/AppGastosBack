@@ -5,7 +5,7 @@ const expensesApiRouter = require('./api/expenses');
 // const purchasesApiRouter = require('./api/purchases');
 // const trainingsApiRouter = require('./api/trainings');
 // const tripsApiRouter = require('./api/trips');
-const { checkToken } = require('../middlewarees');
+const { checkToken } = require('../routes/middlewares');
 
 
 router.use('/users', usersApiRouter);
