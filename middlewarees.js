@@ -11,7 +11,6 @@ const checkToken = async (req, res, next) => {
   const token = req.headers.authorization;
 
   let obj;
-
   try {
     obj = jwt.verify(token, process.env.SECRET_KEY);
   } catch (error) {
@@ -19,6 +18,7 @@ const checkToken = async (req, res, next) => {
   }
 
   console.log(obj);
+
   if (dayjs().unix() > obj.expiration_date) {
     return res.status(401).json({ error: 'El token ha expirado' });
   }

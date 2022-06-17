@@ -8,7 +8,6 @@ const comparePassword = (passwordLogin) => {
   return executeQueryOne('SELECT * FROM appgastos.users WHERE password = ?', [passwordLogin]);
 }
 
-
 module.exports = {
   getByEmail, comparePassword
 }
