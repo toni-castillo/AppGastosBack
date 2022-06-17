@@ -1,7 +1,5 @@
 const mysql = require('mysql2'); // Importa el módulo mysql2 para conectar con la base de datos
 
-// console.log('Configuro la base de datos');
-
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
