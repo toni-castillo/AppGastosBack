@@ -3,8 +3,10 @@ const userModel = require('../../models/user.model');
 const { createToken } = require('../../helpers');
 
 router.get('/', async (req, res) => {
-  res.send('Hello World');
+  const users = await userModel.getAll();
+  res.json(users)
 });
+
 
 router.post('/login', async (req, res) => {
   const user = await userModel.getByEmail(req.body.email);
