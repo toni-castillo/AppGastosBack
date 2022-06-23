@@ -7,7 +7,6 @@ router.get('/', async (req, res) => {
   res.json(users)
 });
 
-
 router.post('/login', async (req, res) => {
   const user = await userModel.getByEmail(req.body.email);
 
