@@ -28,6 +28,14 @@ const createToken = (user) => {
   return jwt.sign(obj, process.env.SECRET_KEY);
 }
 
+//RECUPERACIÓN DEL USUARIO ID 
+const getUserId = (req) => {
+  let headers = req.headers;
+  let reqToken = headers.authorization;
+  let tokenJson = jwt.decode(reqToken)
+  return tokenJson.id_user
+}
+
 module.exports = {
-  executeQuery, executeQueryOne, createToken
+  executeQuery, executeQueryOne, createToken, getUserId
 }

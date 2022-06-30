@@ -2,9 +2,11 @@ const router = require('express').Router();
 const tripModel = require('../../models/trip.model');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator')
+const { getUserId } = require('../../helpers')
 
-router.get('/', (req, res) => {
-  res.send('Estoy en /trips');
+router.get('/', async (req, res) => {
+  const trips = await tripModel.getAll();
+  res.json(trips);;
 });
 
 router.post('/create',
@@ -39,9 +41,6 @@ router.post('/create',
   body('pernocta')
     .exists()
     .withMessage('El campo es obligatorio'),
-  body('hotel')
-    .exists()
-    .withMessage('El campo es obligatorio'),
   body('origen')
     .exists()
     .withMessage('El campo es obligatorio'),
@@ -51,11 +50,6 @@ router.post('/create',
   body('transporte')
     .exists()
     .withMessage('El campo es obligatorio'),
-  body('km')
-    .exists()
-    .withMessage('El campo es obligatorio')
-    .isNumeric()
-    .withMessage('El campo tiene que ser un número'),
   body('importe')
     .exists()
     .withMessage('El campo es obligatorio')
@@ -70,15 +64,12 @@ router.post('/create',
       return res.status(400).json(errors.array());
     }
 
-    //RECUPERACIÓN DEL USUARIO ID 
-    let headers = req.headers;
-    let reqToken = headers.authorization;
-    let tokenJson = jwt.decode(reqToken)
-    let userId = tokenJson.id_user
+    let userId = getUserId(req);
 
     try {
-      const result = await tripModel.create(req.body, userId);
-      res.json(result);
+      const result = await tripModel.create(req.body, "trip", userId);
+      const trip = await tripModel.getById(result.insertId)
+      res.json(trip);
     } catch (Err) {
       res.json({ Err });
     }
@@ -86,13 +77,28 @@ router.post('/create',
 );
 
 
+router.put('/:tripId', async (req, res) => {
 
-router.put('/edit', (req, res) => {
-  res.send('Estoy en /trips/edit');
+  let userId = getUserId(req);
+
+  try {
+    const result = await tripModel.updateById(req.params.tripId, req.body, "trip", userId);
+    const trip = await tripModel.getById(req.params.tripId);
+    res.json(trip);
+  } catch (Err) {
+    res.json({ Err });
+  }
 });
 
-router.delete('/delete', (req, res) => {
-  res.send('Estoy en /trips/delete');
+router.delete('/:tripId', async (req, res) => {
+
+  const result = await tripModel.deleteById(req.params.tripId);
+  if (result.affectedRows === 1) {
+    res.json({ success: "Se ha borrado el viaje" })
+  } else {
+    res.json({ error: "No se ha borrado el viaje" });
+  }
+
 });
 
 module.exports = router;
