@@ -3,6 +3,14 @@ const dayjs = require('dayjs');
 
 const userModel = require('../models/user.model');
 
+const createToken = (user) => {
+  const obj = {
+    id_user: user.id,
+    expiration_date: dayjs().add(1, 'week').unix()
+  }
+  return jwt.sign(obj, process.env.SECRET_KEY);
+}
+
 const checkToken = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).json({ error: 'Tu petición debe incluir la cabecera Authorization' });
@@ -39,4 +47,4 @@ const checkRole = (role) => {
   }
 }
 
-module.exports = { checkToken, checkRole };
+module.exports = { createToken, checkToken, checkRole };
