@@ -11,13 +11,13 @@ router.post('/login', async (req, res) => {
   const user = await userModel.getByEmail(req.body.email);
 
   if (!user) {
-    return res.status(401).json({ error: 'Error en usuario/a y/o contraseña1' });
+    return res.status(401).json({ error: 'Error en usuario/a y/o contraseña' });
   }
 
   const isValid = await userModel.comparePassword(req.body.password, user.password);
 
   if (!isValid) {
-    return res.status(401).json({ error: 'Error en usuario/a y/o contraseña2' });
+    return res.status(401).json({ error: 'Error en usuario/a y/o contraseña' });
   }
 
   res.json({
