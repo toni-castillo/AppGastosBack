@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const userModel = require('../../models/user.model');
-const { createToken } = require('../../helpers');
+const { createToken } = require('../../helpers/executeQueries');
 
 router.get('/', async (req, res) => {
   const users = await userModel.getAll();

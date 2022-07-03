@@ -1,4 +1,4 @@
-const { executeQuery, executeQueryOne } = require("../helpers")
+const { executeQuery, executeQueryOne } = require("../helpers/executeQueries")
 
 const create = ({ nombre, username, email, password }) => {
   return executeQuery();
