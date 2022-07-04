@@ -2,15 +2,15 @@ const router = require('express').Router();
 
 const usersApiRouter = require('./api/users');
 const expensesApiRouter = require('./api/expenses');
-// const purchasesApiRouter = require('./api/purchases');
+const purchasesApiRouter = require('./api/purchases');
 // const trainingsApiRouter = require('./api/trainings');
 // const tripsApiRouter = require('./api/trips');
-const { checkToken } = require('../routes/middlewares');
+const { checkToken } = require('../helpers/middlewares');
 
 
 router.use('/users', usersApiRouter);
 router.use('/expenses', checkToken, expensesApiRouter);
-// router.use('/purchases', purchasesApiRouter);
+router.use('/purchases', purchasesApiRouter);
 // router.use('/trainings', trainingsApiRouter);
 // router.use('/trips', tripsApiRouter);
 

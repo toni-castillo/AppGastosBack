@@ -1,4 +1,4 @@
-const { executeQuery, executeQueryOne } = require("../helpers")
+const { executeQuery, executeQueryOne } = require("../helpers/executeQueries")
 
 const getByEmail = (email) => {
   return executeQueryOne('SELECT * FROM appgastos.users WHERE email = ?', [email]);
