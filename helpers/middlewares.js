@@ -39,4 +39,12 @@ const checkRole = (role) => {
   }
 }
 
-module.exports = { checkToken, checkRole };
+const createToken = (user) => {
+  const obj = {
+    id_user: user.id,
+    expiration_date: dayjs().add(1, 'week').unix()
+  }
+  return jwt.sign(obj, process.env.SECRET_KEY);
+}
+
+module.exports = { checkToken, checkRole, createToken };
