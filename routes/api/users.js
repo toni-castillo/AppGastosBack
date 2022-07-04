@@ -23,7 +23,9 @@ router.post('/login', async (req, res) => {
   res.json({
     success: '¡Has iniciado sesión correctamente!',
     token: createToken(user),
-    role: user.role
+    role: user.role,
+    name: user.name,
+    surname: user.surname
   })
 
 });

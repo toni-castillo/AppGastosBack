@@ -11,6 +11,7 @@ const createToken = (user) => {
   return jwt.sign(obj, process.env.SECRET_KEY);
 }
 
+
 const checkToken = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).json({ error: 'Tu petición debe incluir la cabecera Authorization' });
@@ -36,6 +37,7 @@ const checkToken = async (req, res, next) => {
 
   next();
 }
+
 
 const checkRole = (role) => {
   return (req, res, next) => {
