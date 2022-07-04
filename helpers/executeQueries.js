@@ -20,22 +20,5 @@ const executeQueryOne = (sql, values = []) => {
   });
 }
 
-const createToken = (user) => {
-  const obj = {
-    id_user: user.id,
-    expiration_date: dayjs().add(1, 'week').unix()
-  }
-  return jwt.sign(obj, process.env.SECRET_KEY);
-}
 
-//RECUPERACIÓN DEL USUARIO ID 
-const getUserId = (req) => {
-  let headers = req.headers;
-  let reqToken = headers.authorization;
-  let tokenJson = jwt.decode(reqToken)
-  return tokenJson.id_user
-}
-
-module.exports = {
-  executeQuery, executeQueryOne, createToken, getUserId
-}
+module.exports = { executeQuery, executeQueryOne, }

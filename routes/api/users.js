@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const userModel = require('../../models/user.model');
-const { createToken } = require('../../helpers');
+const { createToken } = require('../../helpers/middlewares');
 
 router.get('/', async (req, res) => {
   const users = await userModel.getAll();
@@ -24,8 +24,10 @@ router.post('/login', async (req, res) => {
   res.json({
     success: '¡Has iniciado sesión correctamente!',
     token: createToken(user),
-    role: user.role
-  })
+    role: user.role,
+    name: user.name,
+    surname: user.surname
+  });
 
 });
 
