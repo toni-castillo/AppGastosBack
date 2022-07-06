@@ -2,9 +2,9 @@ const router = require('express').Router();
 const purchaseModel = require('../../models/purchases.model');
 const { createPurchaseValidators } = require('../../helpers/validators');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const allPurchases = purchaseModel.getAll();
+    const allPurchases = await purchaseModel.getAll();
     res.json(allPurchases);
   } catch (error) {
     res.json({ message: error.message });
