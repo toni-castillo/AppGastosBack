@@ -25,12 +25,13 @@ DROP TABLE IF EXISTS `expenses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `expenses` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `date_request` date DEFAULT NULL,
   `name` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `surname` varchar(60) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `department` varchar(60) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `project_code` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `general_type` varchar(20) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `reason` mediumtext COLLATE utf8mb4_unicode_520_ci,
   `date_expense` date DEFAULT NULL,
   `type` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
@@ -50,8 +51,12 @@ CREATE TABLE `expenses` (
   `training_hours` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `training_schedule` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `number_people` int DEFAULT NULL,
+  `hotel_link` varchar(100) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `users_id` int NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_expenses_users1_idx` (`users_id`),
+  CONSTRAINT `fk_expenses_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -62,30 +67,6 @@ CREATE TABLE `expenses` (
 LOCK TABLES `expenses` WRITE;
 /*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
 /*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tbi_validation`
---
-
-DROP TABLE IF EXISTS `tbi_validation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tbi_validation` (
-  `users_id` int NOT NULL,
-  `expenses_id` int NOT NULL,
-  `is_accepted` float NOT NULL,
-  PRIMARY KEY (`users_id`,`expenses_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbi_validation`
---
-
-LOCK TABLES `tbi_validation` WRITE;
-/*!40000 ALTER TABLE `tbi_validation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbi_validation` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -127,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-17 20:22:57
+-- Dump completed on 2022-07-06 21:28:33

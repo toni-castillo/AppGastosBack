@@ -1,1 +1,0 @@
-SELECT * FROM appgastos.users;

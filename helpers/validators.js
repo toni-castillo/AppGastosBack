@@ -9,10 +9,17 @@ const createPurchaseValidators = () => {
       exists: { errorMessage: 'Se requiere indicar el código del proyecto' }
     },
     reason: {
-      exists: { errorMessage: 'Se requiere indicar la razón' }
+      exists: { errorMessage: 'Se requiere indicar la razón' },
+      isLength: {
+        errorMessage: " El campo no puede tener más de 400 caracteres ",
+        options: {
+          max: 400
+        }
+      }
     },
     date_expense: {
-      exists: { errorMessage: 'Se requiere indicar la fecha' }
+      exists: { errorMessage: 'Se requiere indicar la fecha' },
+      isDate: { errorMessage: 'Debes introducir una fecha correcta' },
     },
     product_link: {
       exists: { errorMessage: 'Se requiere indicar el producto' }
