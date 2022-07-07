@@ -4,6 +4,10 @@ const getAll = () => {
     return executeQuery('select * from appgastos.expenses where general_type = "trip"');
 }
 
+const getAllByDepartment = (department) => {
+    return executeQuery('select * from appgastos.expenses where general_type = "trip" and department = ?', [department]);
+}
+
 const getById = (tripId) => {
     return executeQueryOne('select * from appgastos.expenses where id = ?', [tripId]);
 }
@@ -20,4 +24,4 @@ const deleteById = (tripId) => {
     return executeQuery('delete from appgastos.expenses where id = ?', [tripId]);
 }
 
-module.exports = { create, getAll, getById, updateById, deleteById };
+module.exports = { create, getAll, getById, updateById, deleteById, getAllByDepartment };
