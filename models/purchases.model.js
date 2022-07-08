@@ -1,7 +1,7 @@
 const { executeQuery, executeQueryOne } = require("../helpers/executeQueries")
 
-const create = ({ date_request, name, surname, department, project_code, reason, date_expense, product_link, provider, units, amount, general_type }) => {
-  return executeQuery('INSERT INTO appgastos.expenses (date_request, name, surname, department, project_code, reason, date_expense, product_link, provider, units, amount, general_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [date_request, name, surname, department, project_code, reason, date_expense, product_link, provider, units, amount, "purchase"]);
+const create = ({ date_request, department, project_code, reason, date_expense, product_link, provider, units, amount, general_type }, name, surname, users_id) => {
+  return executeQuery('INSERT INTO appgastos.expenses (date_request, name, surname, department, project_code, reason, date_expense, product_link, provider, units, amount, general_type, users_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [date_request, name, surname, department, project_code, reason, date_expense, product_link, provider, units, amount, "purchase", users_id]);
 }
 
 const getAll = () => {
@@ -10,6 +10,10 @@ const getAll = () => {
 
 const getOne = (id) => {
   return executeQueryOne('SELECT * FROM appgastos.expenses WHERE id = ?', [id]);
+}
+
+const getById = (purchaseId) => {
+  return executeQueryOne('SELECT * FROM appgastos.expenses where id = ?', [purchaseId]);
 }
 
 const update = (purchaseId, { date_request, name, surname, department, project_code, reason, date_expense, product_link, provider, units, amount, general_type }) => {
@@ -27,5 +31,5 @@ const deleteOne = (purchaseId) => {
 
 
 module.exports = {
-  create, getAll, getOne, update, deleteOne
+  create, getAll, getOne, getById, update, deleteOne
 }

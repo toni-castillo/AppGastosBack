@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const purchaseModel = require('../../models/purchases.model');
+const userModel = require('../../models/user.model');
+const { validationResult } = require('express-validator');
+const { getUserId } = require('../../helpers/utils');
 const { createPurchaseValidators } = require('../../helpers/validators');
 
 router.get('/', async (req, res) => {
@@ -14,8 +17,19 @@ router.get('/', async (req, res) => {
 router.post('/create',
   createPurchaseValidators(),
   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    let userId = getUserId(req);
+    let user = await userModel.getById(userId);
+    let name = user.name;
+    let surname = user.surname;
+
     try {
-      const purchase = await purchaseModel.create(req.body);
+      const result = await purchaseModel.create(req.body, name, surname, userId);
+      const purchase = await purchaseModel.getById(result.insertId);
       res.json(purchase);
     } catch (error) {
       res.json({ error: error.message });
