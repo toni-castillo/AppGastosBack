@@ -12,8 +12,8 @@ const getById = (userId) => {
   return executeQueryOne('SELECT * FROM appgastos.users WHERE id = ?', [userId]);
 }
 
-const comparePassword = (passwordLogin) => {
-  return executeQueryOne('SELECT * FROM appgastos.users WHERE password = ?', [passwordLogin]);
+const comparePassword = (passwordLogin, userId) => {
+  return executeQueryOne('SELECT * FROM appgastos.users WHERE password = ? AND id = ?', [passwordLogin, userId]);
 }
 
 module.exports = {
