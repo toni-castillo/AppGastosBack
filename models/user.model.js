@@ -5,15 +5,15 @@ const getByEmail = (email) => {
 }
 
 const getAll = () => {
-  return executeQuery('select * from appgastos.users');
+  return executeQuery('SELECT * FROM appgastos.users');
 }
 
 const getById = (userId) => {
-  return executeQueryOne('select * from appgastos.users where id = ?', [userId]);
+  return executeQueryOne('SELECT * FROM appgastos.users WHERE id = ?', [userId]);
 }
 
-const comparePassword = (passwordLogin) => {
-  return executeQueryOne('SELECT * FROM appgastos.users WHERE password = ?', [passwordLogin]);
+const comparePassword = (passwordLogin, userId) => {
+  return executeQueryOne('SELECT * FROM appgastos.users WHERE password = ? AND id = ?', [passwordLogin, userId]);
 }
 
 module.exports = {

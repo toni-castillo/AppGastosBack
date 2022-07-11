@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Error en usuario/a y/o contraseña' });
   }
 
-  const isValid = await userModel.comparePassword(req.body.password, user.password);
+  const isValid = await userModel.comparePassword(req.body.password, user.id);
 
   if (!isValid) {
     return res.status(401).json({ error: 'Error en usuario/a y/o contraseña' });
@@ -27,7 +27,8 @@ router.post('/login', async (req, res) => {
     name: user.name,
     surname: user.surname
   })
-
 });
+
+
 
 module.exports = router;
