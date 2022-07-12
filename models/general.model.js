@@ -1,5 +1,9 @@
 const { executeQuery, executeQueryOne } = require("../helpers/executeQueries")
 
+const getById = (expenseId) => {
+  return executeQueryOne('select * from appgastos.expenses where id = ?', [expenseId]);
+}
+
 const getByDepartment = (department) => {
   return executeQuery('SELECT * FROM appgastos.expenses WHERE department = ?', [department]);
 }
@@ -17,5 +21,5 @@ const updateByIdNote = (validator_note, id) => {
 }
 
 module.exports = {
-  getByDepartment, getByEmployee, updateById, updateByIdNote
+  getByDepartment, getByEmployee, updateById, updateByIdNote, getById
 }
