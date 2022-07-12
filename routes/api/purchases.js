@@ -26,6 +26,10 @@ router.post('/create',
     let user = await userModel.getById(userId);
     let name = user.name;
     let surname = user.surname;
+    let role = user.role;
+    if (role !== "employee") {
+      return res.status(401).json({ error: "No tienes permiso" })
+    };
 
     try {
       const result = await purchaseModel.create(req.body, name, surname, userId);
@@ -36,14 +40,29 @@ router.post('/create',
     }
   });
 
-router.put('/edit', (req, res) => {
-  try {
-    const purchase = purchaseModel.update(req.body.id, req.body);
-    res.json(purchase);
-  } catch (error) {
-    res.json({ error: error.message });
-  }
-});
+router.put('/:purchaseId',
+  createPurchaseValidators(),
+
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    let userId = getUserId(req);
+    let user = await userModel.getById(userId);
+    let role = user.role;
+    if (role !== "employee") {
+      return res.status(401).json({ error: "No tienes permiso" })
+    }
+
+    try {
+      const purchase = purchaseModel.updateById(req.params.purchaseId, req.body);
+      res.json(purchase);
+    } catch (error) {
+      res.json({ error: error.message });
+    }
+  });
 
 router.delete('/delete', (req, res) => {
   try {

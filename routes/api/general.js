@@ -23,4 +23,38 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:expenseId',
+  async (req, res) => {
+    try {
+      const result = await generalModel.getById(req.params.expenseId);
+      res.json(result);
+    } catch (Err) {
+      res.json({ Err });
+    }
+  }
+);
+
+
+router.put('/:expenseId',
+
+  async (req, res) => {
+    try {
+      const result = await generalModel.updateById(req.body.isAccepted, req.params.expenseId);
+      res.json(result);
+    } catch (Err) {
+      res.json({ Err });
+    }
+  });
+
+
+router.put('/:expenseId/refused',
+
+  async (req, res) => {
+    try {
+      const result = await generalModel.updateByIdNote(req.body.validator_note, req.params.expenseId);
+      res.json(result);
+    } catch (Err) {
+      res.json({ Err });
+    }
+  });
 module.exports = router;
