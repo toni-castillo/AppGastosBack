@@ -12,8 +12,8 @@ const { checkToken } = require('../helpers/middlewares');
 router.use('/users', usersApiRouter);
 router.use('/expenses', checkToken, expensesApiRouter);
 router.use('/purchases', checkToken, purchasesApiRouter);
-router.use('/trainings', trainingsApiRouter);
-router.use('/trips', tripsApiRouter);
+router.use('/trainings', checkToken, trainingsApiRouter);
+router.use('/trips', checkToken, tripsApiRouter);
 router.use('/general', checkToken, generalApiRouter);
 
 module.exports = router;
