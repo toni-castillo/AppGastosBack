@@ -22,7 +22,14 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Error en usuario/a y/o contraseña' });
   }
 
-  res.json(createToken(user))
+  res.json({
+    success: '¡Has iniciado sesión correctamente!',
+    token: createToken(user),
+    role: user.role,
+    name: user.name,
+    surname: user.surname
+  }
+  )
 });
 
 router.get('/profile', async (req, res) => {
