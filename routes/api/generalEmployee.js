@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const generalModel = require('../../models/general.model');
+const generalValidatorModel = require('../../models/generalValidator.model');
 const userModel = require('../../models/user.model');
 const { getUserId } = require('../../helpers/utils');
 
@@ -13,12 +13,12 @@ router.get('/', async (req, res) => {
 
   // Si el role es employee - muestra todos los formularios que ha creado
   if (role === 'employee') {
-    expensesByUserId = await generalModel.getByEmployee(userId);
+    expensesByUserId = await generalValidatorModel.getByEmployee(userId);
     res.json(expensesByUserId);
 
     //Si el role es validator - muestra solo los formularios de su departamento
   } else {
-    expensesByDepartment = await generalModel.getByDepartment(department);
+    expensesByDepartment = await generalValidatorModel.getByDepartment(department);
     res.json(expensesByDepartment);
   }
 });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 router.get('/:expenseId',
   async (req, res) => {
     try {
-      const result = await generalModel.getById(req.params.expenseId);
+      const result = await generalValidatorModel.getById(req.params.expenseId);
       res.json(result);
     } catch (Err) {
       res.json({ Err });
@@ -39,7 +39,7 @@ router.put('/:expenseId',
 
   async (req, res) => {
     try {
-      const result = await generalModel.updateById(req.body.isAccepted, req.params.expenseId);
+      const result = await generalValidatorModel.updateById(req.body.isAccepted, req.params.expenseId);
       res.json(result);
     } catch (Err) {
       res.json({ Err });
@@ -51,10 +51,11 @@ router.put('/:expenseId/refused',
 
   async (req, res) => {
     try {
-      const result = await generalModel.updateByIdNote(req.body.validator_note, req.params.expenseId);
+      const result = await generalValidatorModel.updateByIdNote(req.body.validator_note, req.params.expenseId);
       res.json(result);
     } catch (Err) {
       res.json({ Err });
     }
   });
+
 module.exports = router;
