@@ -112,7 +112,85 @@ const propertyCreateValidatorTrips = () => {
   });
 }
 
+const propertyCreateValidatorTraining = () => {
+  return checkSchema({
+    fechaSolicitud: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isDate: { errorMessage: " Debes introducir una fecha correcta " },
+    },
+
+    departamento: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+    },
+
+    codigo: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isLength: {
+        errorMessage: " El campo no puede tener más de 20 caracteres ",
+        options: {
+          max: 20
+        }
+      }
+    },
+
+    motivoGasto: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isLength: {
+        errorMessage: " El campo no puede tener más de 400 caracteres ",
+        options: {
+          max: 400
+        }
+      }
+    },
+
+    fechaFormacion: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isDate: { errorMessage: " Debes introducir una fecha correcta " },
+    },
+
+    formacionSolicitada: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+    },
+
+    proveedor: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+    },
+
+    horasFormacion: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isNumeric: { errorMessage: " El campo tiene que ser un número " }
+    },
+
+    horarioFormacion: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+    },
+
+    personas: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isNumeric: { errorMessage: " El campo tiene que ser un número " }
+    },
+
+    importe: {
+      in: ['body'],
+      exists: { errorMessage: " El campo es obligatorio " },
+      isNumeric: { errorMessage: " El campo tiene que ser un número " }
+    },
+
+  });
+
+};
+
 module.exports = {
-  createPurchaseValidators, propertyCreateValidatorTrips
+  createPurchaseValidators, propertyCreateValidatorTrips, propertyCreateValidatorTraining
 }
 
