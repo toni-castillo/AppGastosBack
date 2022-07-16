@@ -55,13 +55,34 @@ router.post('/create',
     }
   });
 
-// TODO: Terminar resto de rutas
-router.put('/edit', (req, res) => {
-  res.send('Estoy en /expenses/edit');
+router.put('/:expenseId', async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.array());
+  }
+
+  let userId = getUserId(req);
+  let user = await userModel.getById(userId);
+  let role = user.role;
+  if (role !== "employee") {
+    return res.status(401).json({ error: "No tienes permiso" })
+  }
+
+  try {
+    const expense = expenseModel.updateById(req.params.expenseId, req.body);
+    res.json(expense);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 });
 
 router.delete('/delete', (req, res) => {
-  res.send('Estoy en /expenses/delete');
+  try {
+    const expense = expenseModel.deleteOne(req.body.id);
+    res.json(expense);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 });
 
 module.exports = router;
