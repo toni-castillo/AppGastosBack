@@ -3,6 +3,10 @@ const expenseModel = require('../../models/expense.model');
 const userModel = require('../../models/user.model');
 const { validationResult } = require('express-validator');
 const { getUserId } = require('../../helpers/utils');
+const multer = require('multer');
+const upload = multer({ dest: 'public/uploads' });
+const fs = require('fs');
+
 // TODO: Crear un expenses validator
 
 router.get('/', async (req, res) => {
@@ -15,6 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/create',
+  upload.single('attached'),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -30,10 +35,21 @@ router.post('/create',
       return res.status(401).json({ error: "No tienes permiso" })
     };
 
+    console.log('req.body', req.body);
+    console.log('req.file', req.file);
+
+    const extension = '.' + req.file.mimetype.split('/')[1];
+    const newFileName = req.file.filename + extension;
+    const newPath = req.file.path + '-User' + userId + extension;
+    console.log('newPath', newPath);
+    fs.renameSync(req.file.path, newPath);
+
+    req.body.attached = newFileName;
+
     try {
       const result = await expenseModel.create(req.body, name, surname, userId);
-      const purchase = await expenseModel.getById(result.insertId);
-      res.json(purchase);
+      const expense = await expenseModel.getById(result.insertId);
+      res.json(expense);
     } catch (error) {
       res.json({ error: error.message });
     }
