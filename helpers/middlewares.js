@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const dayjs = require('dayjs');
 
 const userModel = require('../models/user.model');
+const { getUserId } = require('./utils');
+
 
 const createToken = (user) => {
   const obj = {
@@ -38,13 +40,15 @@ const checkToken = async (req, res, next) => {
   next();
 }
 
-
 const checkRole = (role) => {
-  return (req, res, next) => {
-    if (req.user.role == role) {
+  return async (req, res, next) => {
+    let userId = getUserId(req);
+    let user = await userModel.getById(userId);
+
+    if (user.role == role) {
       next();
     } else {
-      res.status(401).json({ error: 'No tienes permisos para realizar esta acción' });
+      res.status(401).json({ error: 'No tienes permisos para realizar esta acción (checkRole)' });
     }
   }
 }
