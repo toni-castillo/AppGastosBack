@@ -38,13 +38,16 @@ router.post('/create',
     console.log('req.body', req.body);
     console.log('req.file', req.file);
 
-    const extension = '.' + req.file.mimetype.split('/')[1];
-    const newFileName = req.file.filename + extension;
-    const newPath = req.file.path + '-User' + userId + extension;
-    console.log('newPath', newPath);
-    fs.renameSync(req.file.path, newPath);
+    if (req.file) {
+      const extension = '.' + req.file.mimetype.split('/')[1];
+      const newFileName = req.file.filename + extension;
+      const newPath = req.file.path + '-User' + userId + extension;
+      console.log('newPath', newPath);
+      fs.renameSync(req.file.path, newPath);
 
-    req.body.attached = newFileName;
+      req.body.attached = newFileName;
+    }
+
 
     try {
       const result = await expenseModel.create(req.body, name, surname, userId);
