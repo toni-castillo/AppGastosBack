@@ -26,10 +26,6 @@ router.post('/create',
     let user = await userModel.getById(userId);
     let name = user.name;
     let surname = user.surname;
-    let role = user.role;
-    if (role !== "employee") {
-      return res.status(401).json({ error: "No tienes permiso" })
-    };
 
     try {
       const result = await purchaseModel.create(req.body, name, surname, userId);
@@ -47,13 +43,6 @@ router.put('/:purchaseId',
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json(errors.array());
-    }
-
-    let userId = getUserId(req);
-    let user = await userModel.getById(userId);
-    let role = user.role;
-    if (role !== "employee") {
-      return res.status(401).json({ error: "No tienes permiso" })
     }
 
     try {
