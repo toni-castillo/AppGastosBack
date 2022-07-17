@@ -36,7 +36,7 @@ router.post('/create',
 
     if (req.file) {
       const extension = '.' + req.file.mimetype.split('/')[1];
-      const newFileName = req.file.filename + extension;
+      const newFileName = req.file.filename + '-User' + userId + extension;
       const newPath = req.file.path + '-User' + userId + extension;
       console.log('newPath', newPath);
       fs.renameSync(req.file.path, newPath);
