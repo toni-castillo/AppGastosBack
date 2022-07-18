@@ -3,11 +3,11 @@ const expenseModel = require('../../models/expense.model');
 const userModel = require('../../models/user.model');
 const { validationResult } = require('express-validator');
 const { getUserId } = require('../../helpers/utils');
+const { createExpenseValidators } = require('../../helpers/validators');
 const multer = require('multer');
 const upload = multer({ dest: 'public/uploads' });
 const fs = require('fs');
 
-// TODO: Crear un expenses validator
 
 router.get('/', async (req, res) => {
   try {
@@ -20,6 +20,8 @@ router.get('/', async (req, res) => {
 
 router.post('/create',
   upload.single('attached'),
+  createExpenseValidators(),
+
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -54,19 +56,22 @@ router.post('/create',
     }
   });
 
-router.put('/:expenseId', async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors.array());
-  }
+router.put('/:expenseId',
+  createExpenseValidators(),
 
-  try {
-    const expense = expenseModel.updateById(req.params.expenseId, req.body);
-    res.json(expense);
-  } catch (error) {
-    res.json({ error: error.message });
-  }
-});
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    try {
+      const expense = expenseModel.updateById(req.params.expenseId, req.body);
+      res.json(expense);
+    } catch (error) {
+      res.json({ error: error.message });
+    }
+  });
 
 router.delete('/delete', (req, res) => {
   try {
